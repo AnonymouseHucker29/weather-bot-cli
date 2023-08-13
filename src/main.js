@@ -2,7 +2,7 @@
 
 import dotenv from "dotenv";
 import { prompt } from "./utils/prompt.js";
-import { TempConverter } from "./helpers/conversions.js";
+import { tempConverter } from "./helpers/conversions.js";
 import { capitalizeFirstLetter } from "./helpers/capitalizeFirstLetter.js";
 import {
   fetchGeocodingData,
@@ -45,7 +45,7 @@ async function weatherBot() {
         selectedLocation.lon
       );
 
-      const temp = TempConverter(weatherData);
+      const temp = tempConverter(weatherData);
 
       console.log(
         `The weather in ${selectedLocation.name}, ${selectedLocation.state}, ${selectedLocation.country} is ${temp.celsius}°C or ${temp.fahrenheit}°F having ${weatherData.weather[0].description}.`
@@ -58,7 +58,7 @@ async function weatherBot() {
         console.log(`There's no available weather data for ${input}.`);
         process.exit(1);
       } else {
-        const temp = TempConverter(weatherData);
+        const temp = tempConverter(weatherData);
 
         console.log(
           `The weather in ${weatherData.name} is ${temp.celsius}°C or ${temp.fahrenheit}°F having ${weatherData.weather[0].description}.`
