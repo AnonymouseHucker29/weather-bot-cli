@@ -1,3 +1,5 @@
+"use strict";
+
 import { oraPromise } from "ora";
 
 export async function fetchGeocodingData(locationName) {
@@ -5,10 +7,13 @@ export async function fetchGeocodingData(locationName) {
     locationName
   )}&limit=5&appid=${process.env.OPENWEATHERMAP_KEY}`;
 
-  const geocodingResponse = await oraPromise(fetch(geocodingAPI));
-  const geocodingData = await geocodingResponse.json();
+  const geocodingResponse = (await oraPromise(fetch(geocodingAPI)))
+    .json()
+    .catch((err) => {
+      console.error(err);
+    });
 
-  return geocodingData;
+  return geocodingResponse;
 }
 
 export async function fetchWeatherDataByName(locationName) {
@@ -16,10 +21,13 @@ export async function fetchWeatherDataByName(locationName) {
     locationName
   )}&appid=${process.env.OPENWEATHERMAP_KEY}`;
 
-  const weatherResponse = await oraPromise(fetch(weatherAPI));
-  const weatherData = await weatherResponse.json();
+  const weatherResponse = (await oraPromise(fetch(weatherAPI)))
+    .json()
+    .catch((err) => {
+      console.error(err);
+    });
 
-  return weatherData;
+  return weatherResponse;
 }
 
 export async function fetchWeatherDataByCoordinates(lat, lon) {
@@ -27,8 +35,11 @@ export async function fetchWeatherDataByCoordinates(lat, lon) {
     lat
   )}&lon=${encodeURIComponent(lon)}&appid=${process.env.OPENWEATHERMAP_KEY}`;
 
-  const weatherResponse = await oraPromise(fetch(weatherAPI));
-  const weatherData = await weatherResponse.json();
+  const weatherResponse = (await oraPromise(fetch(weatherAPI)))
+    .json()
+    .catch((err) => {
+      console.error(err);
+    });
 
-  return weatherData;
+  return weatherResponse;
 }
